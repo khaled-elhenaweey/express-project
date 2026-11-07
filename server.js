@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const friendsRouter = require("./routes/friends.router.js");
 const messagesRouter = require("./routes/messages.router.js");
@@ -13,11 +14,15 @@ app.use((req, res, next) => {
   console.log(`${req.method} ${req.baseUrl}${req.url} - ${delta}ms`);
 });
 
+app.use("/site", express.static(path.join(__dirname, "public")));
 app.use(express.json());
+
 // Friends controller
 app.use("/friends", friendsRouter);
+
 // Messages controller
 app.use("/messages", messagesRouter);
+
 // server listening
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
